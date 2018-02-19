@@ -1247,7 +1247,7 @@ class BaseResponse(object):
            isinstance(content_location, text_type):
             headers['Content-Location'] = iri_to_uri(content_location)
 
-        if status in (304, 412):
+        if status == 304:
             remove_entity_headers(headers)
 
         # if we can determine the content length automatically, we
@@ -1287,7 +1287,7 @@ class BaseResponse(object):
         """
         status = self.status_code
         if environ['REQUEST_METHOD'] == 'HEAD' or \
-           100 <= status < 200 or status in (204, 304, 412):
+           100 <= status < 200 or status in (204, 304):
             iterable = ()
         elif self.direct_passthrough:
             if __debug__:
